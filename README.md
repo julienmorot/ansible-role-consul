@@ -4,6 +4,7 @@
 
 Possible configuration variables and default values are :
 
+```
 consul_datacenter: "dc1"
 consul_data_dir: "/opt/consul"
 consul_client_addr: "0.0.0.0"
@@ -13,5 +14,6 @@ consul_bind_addr: "0.0.0.0"
 consul_advertise_addr: "127.0.0.1"
 consul_bootstrap_expect: 3
 consul_encrypt: "mp+JOIsXqlbi54HXdGQ7G/nzwfWi3CGI9vlaF1jTrRY="
+```
 
 You must define a unique encrypt key with consul keygen command.
