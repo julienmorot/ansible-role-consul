@@ -1,0 +1,12 @@
+---
+
+- name: "Configure /etc/consul.d/consul.hcl"
+  ansible.builtin.template:
+    src: consul.hcl.j2
+    dest: /etc/consul.d/consul.hcl
+    owner: consul
+    group: consul
+    mode: "0644"
+  notify:
+    - Restart consul
+
