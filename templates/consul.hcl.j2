@@ -57,7 +57,11 @@ bind_addr = "{{ consul_bind_addr }}"
 #
 # Advertise addr - if you want to point clients to a different address than bind or LB.
 #advertise_addr = "127.0.0.1"
+{% if consul_retry_join is defined %}
+advertise_addr = "{{ ansible_default_ipv4.address }}"
+{% else %}
 advertise_addr = "{{ consul_advertise_addr }}"
+{% endif %}
 
 # Enterprise License
 # As of 1.10, Enterprise requires a license_path and does not have a short trial.
@@ -104,4 +108,6 @@ encrypt = "{{ consul_encrypt }}"
 #retry_join = ["provider=aws tag_key=... tag_value=..."]
 #retry_join = ["provider=azure tag_name=... tag_value=... tenant_id=... client_id=... subscription_id=... secret_access_key=..."]
 #retry_join = ["provider=gce project_name=... tag_value=..."]
- 	
+{% if consul_retry_join is defined %}
+retry_join = [{% for item in consul_retry_join %}"{{ item }}"{% if not loop.last %},{% endif %}{% endfor %}]
+{% endif %}
