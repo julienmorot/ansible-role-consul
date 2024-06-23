@@ -4,3 +4,4 @@
   ansible.builtin.service:
     name: consul
     state: restarted
+  throttle: 1
