@@ -4,7 +4,7 @@ consul_datacenter: "dc1"
 consul_data_dir: "/opt/consul"
 consul_client_addr: "0.0.0.0"
 consul_ui_config_enabled: "true"
-consul_server: "true"
+consul_server: "false"
 consul_bind_addr: "0.0.0.0"
 consul_bootstrap_expect: 3
 consul_encrypt: "mp+JOIsXqlbi54HXdGQ7G/nzwfWi3CGI9vlaF1jTrRY="
