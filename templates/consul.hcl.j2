@@ -34,9 +34,11 @@ client_addr = "{{ consul_client_addr }}"
 # Enables the built-in web UI server and the required HTTP routes. This eliminates
 # the need to maintain the Consul web UI files separately from the binary.
 # Version 1.10 deprecated ui=true in favor of ui_config.enabled=true
+{% if consul_server == "true" %}
 ui_config{
   enabled = {{ consul_ui_config_enabled }}
 }
+{% endif %}
 
 # server
 # This flag is used to control if an agent is in server or client mode. When provided,
@@ -75,7 +77,9 @@ advertise_addr = "{{ consul_advertise_addr }}"
 # This cannot be used in conjunction with the legacy -bootstrap flag. This flag requires
 # -server mode.
 #bootstrap_expect=3
+{% if consul_server == "true" %}
 bootstrap_expect = {{ consul_bootstrap_expect }}
+{% endif %}
 
 # encrypt
 # Specifies the secret key to use for encryption of Consul network traffic. This key must
