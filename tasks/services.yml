@@ -1,0 +1,13 @@
+---
+
+- name: "Configure /etc/consul.d/services.hcl"
+  ansible.builtin.template:
+    src: service.hcl.j2
+    dest: /etc/consul.d/service-{{ item.name }}-{{ item.port }}.hcl
+    owner: consul
+    group: consul
+    mode: "0644"
+  loop: "{{ consul_services }}"
+  notify:
+    - Restart consul
+  when: consul_services is defined
