@@ -1,6 +1,6 @@
 ---
 
-- name: "Install unzip"
+- name: "Consul | Install unzip"
   package:
     name: "unzip"
     state: present

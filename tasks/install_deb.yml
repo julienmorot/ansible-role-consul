@@ -1,16 +1,16 @@
 ---
 
-- name: "Add Hashicorp APT repo GPG Key"
+- name: "Consul | Add Hashicorp APT repo GPG Key"
   ansible.builtin.shell:
     cmd: wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes  --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
     creates: /usr/share/keyrings/hashicorp-archive-keyring.gpg
 
-- name: "Add Hashicorp APT repo"
+- name: "Consul | Add Hashicorp APT repo"
   ansible.builtin.shell:
     cmd : echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
     creates: /etc/apt/sources.list.d/hashicorp.list
 
-- name: "Install Consul package"
+- name: "Consul | Install Consul package"
   ansible.builtin.apt:
     update_cache: yes
     name: consul

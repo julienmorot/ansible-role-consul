@@ -1,6 +1,6 @@
 ---
 
-- name: "Start and enable consul"
+- name: "Consul | Start and enable consul"
   ansible.builtin.service:
     name: consul
     state: started
