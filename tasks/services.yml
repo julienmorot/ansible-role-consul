@@ -1,13 +1,28 @@
 ---
 
-- name: "Configure /etc/consul.d/services.hcl"
+- name: "Consul | Get services list"
+  ansible.builtin.find:
+    paths: "{{ consul_services_dir }}" 
+    file_type: file
+    excludes:
+      - "{{ consul_config_file }}"
+  register: found_files
+
+- name: "Consul | Unconfigure services"
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ found_files['files'] }}"
+
+- name: "Consul | Configure services"
   ansible.builtin.template:
     src: service.hcl.j2
-    dest: /etc/consul.d/service-{{ item.name }}-{{ item.port }}.hcl
-    owner: consul
-    group: consul
+    dest: "{{ consul_services_dir }}/service-{{ item.name }}-{{ item.port }}.hcl"
+    owner: "{{ consul_user }}"
+    group: "{{ consul_group }}"
     mode: "0644"
   loop: "{{ consul_services }}"
   notify:
     - Restart consul
   when: consul_services is defined
+

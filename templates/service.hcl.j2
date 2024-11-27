@@ -1,6 +1,29 @@
-{
-  "service": {
-    "name": "{{ item.name }}",
-    "port": {{ item.port }}
-  }
+service {
+  id   = "{{ item.name }}-{{ inventory_hostname }}"
+  name = "{{ item.name }}"
+  port = {{ item.port }}
+
+  checks = [
+  {% for check in item.checks %}
+  {
+  {% if check.name is defined %}
+    name     = "{{ check.name }}"
+  {% endif %}
+  {% if check.type == "http" %}
+  http     = "{{ check.check }}"
+  {% endif %}
+  {% if check.type == "tcp" %}
+  tcp      = "{{ check.check }}"
+  {% endif %}
+  {% if check.type == "udp" %}
+  udp      = "{{ check.check }}"
+  {% endif %}
+
+    interval = "{{ check.interval | default('10s') }}"
+    timeout  = "{{ check.timeout | default('10s') }}"
+
+  }{% if not loop.last %},{% endif %}
+  {% endfor %}
+
+  ]
 }

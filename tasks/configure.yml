@@ -8,14 +8,6 @@
     mode: "0755"    
     state: directory
 
-- name: "Consul | Create /etc/consul.d/services"
-  ansible.builtin.file:
-    path: "{{ consul_services_dir }}"
-    owner: "{{ consul_user }}"
-    group: "{{ consul_group }}"
-    mode: "0755"    
-    state: directory
-
 - name: "Consul | Configure /etc/consul.d/consul.hcl"
   ansible.builtin.template:
     src: "consul.hcl.j2"

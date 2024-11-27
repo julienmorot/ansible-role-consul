@@ -2,8 +2,9 @@
 
 consul_datacenter: "dc1"
 consul_data_dir: "/opt/consul"
+consul_config_file: "consul.hcl"
 consul_config_dir: "/etc/consul.d/"
-consul_services_dir: "/etc/consul.d/services"
+consul_services_dir: "/etc/consul.d/"
 consul_client_addr: "0.0.0.0"
 consul_ui_config_enabled: "true"
 consul_server: "false"
@@ -18,5 +19,19 @@ consul_services:
     checks:
       - name: "SSH Health Check"
         type: "tcp"
-        tcp: "localhost:22"
+        check: "localhost:22"
         interval: "60s"
+  - name: "dns"
+    port: 53
+    checks:
+      - name: "DNS Health Check"
+        type: "udp"
+        check: "localhost:53"
+        interval: "60s"
+        timeout: "20s"
+  - name: "http"
+    port: 80
+    checks:
+      - name: "HTTP Health Check"
+        type: "http"
+        check: "http://localhost:80"
