@@ -3,6 +3,6 @@
 - import_tasks: requirements.yml
 - import_tasks: install_deb.yml
 - import_tasks: configure.yml
-- import_tasks: service.yml
 - import_tasks: services.yml
+- import_tasks: service.yml
 
