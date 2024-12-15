@@ -35,3 +35,8 @@ consul_services:
       - name: "HTTP Health Check"
         type: "http"
         check: "http://localhost:80"
+
+consul_backup_hour: 21
+consul_backup_minute: 6
+consul_backup_dir: "/opt/consul/raft/snapshots"
+consul_backup_retention: 30

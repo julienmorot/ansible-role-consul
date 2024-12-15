@@ -1,0 +1,22 @@
+---
+
+- name: Cron consul snapshots
+  ansible.builtin.cron:
+    name: consul-snapshot
+    minute: "{{ consul_snapshot_minute }}"
+    hour: "{{ consul_snapshot_hour }}"
+    job: "consul snapshot save {{ consul_snapshot_dir }}/consul_snapshot_$(date +\%Y\%m\%d\%H\%M).snap"
+    state: present
+    user: root
+    cron_file: "/etc/cron.d/consul-snapshot"
+
+- name: Cron consul snapshot purge
+  ansible.builtin.cron:
+    name: consul-snapshot-purge
+    minute: "{{ consul_snapshot_minute }}"
+    hour: "{{ consul_snapshot_hour }}"
+    job: "find {{ consul_snapshot_dir }} -type f \( -name "*.snap" -o -name "*.json" \) -mtime +{{ consul_retention_days }} -exec rm -f {} \;"
+    state: present
+    user: root
+    cron_file: "/etc/cron.d/consul-snapshot-purge"
+
