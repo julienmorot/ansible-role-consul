@@ -6,4 +6,5 @@
 - import_tasks: services.yml
 - import_tasks: service.yml
 - import_tasks: snapshots.yml
+  when: consul_server == true
 
